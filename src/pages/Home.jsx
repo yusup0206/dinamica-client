@@ -1,10 +1,10 @@
 import BranchList from '../components/BranchList';
-import Slider from '../components/Slider';
+import BannerSlider from '../components/BannerSlider';
 
 const Home = () => {
   return (
     <div className="py-10 flex flex-col gap-10">
-      <Slider />
+      <BannerSlider />
       <BranchList />
     </div>
   );

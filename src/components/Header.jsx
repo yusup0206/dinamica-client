@@ -28,14 +28,14 @@ const Header = () => {
             <div className="hidden sm:flex items-center justify-end gap-4">
               {isAuth ? (
                 <Link to={'/schedule'}>
-                  <div className="flex items-center justify-center gap-2 py-2 px-4 rounded-md font-semibold text-base bg-primary-100 text-white hover:opacity-90 transition-all">
+                  <div className="flex items-center justify-center gap-2 py-2 px-4 rounded-md font-semibold text-base bg-primary-100 text-white hover:bg-opacity-90 transition-all">
                     <FaUser />
                     Aman Amanow
                   </div>
                 </Link>
               ) : (
                 <Link to={'/login'}>
-                  <div className="flex items-center justify-center gap-2 py-2 px-4 rounded-md font-semibold text-base bg-primary-100 text-white hover:opacity-90 transition-all">
+                  <div className="flex items-center justify-center gap-2 py-2 px-4 rounded-md font-semibold text-base bg-primary-100 text-white hover:bg-opacity-90 transition-all">
                     <FaSignInAlt />
                     {t('login')}
                   </div>

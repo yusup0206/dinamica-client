@@ -6,5 +6,7 @@
   "payments": "Платежи",
   "messages": "Сообщения",
   "language": "Язык",
-  "logout": "Выйти"
+  "logout": "Выйти",
+  "mobile-number": "Номер мобильного телефона",
+  "password": "Пароль"
 }

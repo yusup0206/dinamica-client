@@ -18,21 +18,26 @@ import MenuPage from './pages/MenuPage';
 import Login from './pages/Login';
 import PrivateRoute from './components/PrivateRoute';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
   return (
     <>
       <I18nextProvider i18={i18n}>
-        <AppContextProvider>
-          <BrowserRouter>
+        <BrowserRouter>
+          <AppContextProvider>
             <Header />
             <main className="mt-[70px] sm:mt-[82px] mb-[66px] sm:mb-0 min-page-height bg-gray-100">
+              <ToastContainer />
+
               <Routes>
                 <Route path={'/'} element={<Navigate to={'/home'} />} />
                 <Route path={'/home'} element={<Home />} />
                 <Route path={'/login'} element={<Login />} />
+                <Route path={'/branch'} element={<Branch />} />
                 <Route element={<PrivateRoute />}>
                   <Route path={'/profile'} element={<Profile />} />
-                  <Route path={'/branch'} element={<Branch />} />
                   <Route path={'/blog'} element={<Blog />} />
                   <Route path={'/schedule'} element={<Schedule />} />
                   <Route path={'/payments'} element={<Payments />} />
@@ -43,8 +48,8 @@ function App() {
               </Routes>
             </main>
             <Footer />
-          </BrowserRouter>
-        </AppContextProvider>
+          </AppContextProvider>
+        </BrowserRouter>
       </I18nextProvider>
     </>
   );

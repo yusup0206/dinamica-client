@@ -1,4 +1,15 @@
-import { useState } from 'react';
+// modules
+import { useContext, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { AppContext } from '../context/Context';
+
+// components
+import LanguageModal from './LanguageModal';
+
+// language
+import { useTranslation } from 'react-i18next';
+
+// icons
 import {
   FaBell,
   FaCalendarAlt,
@@ -6,17 +17,20 @@ import {
   FaGlobe,
   FaSignOutAlt,
 } from 'react-icons/fa';
-import { Link, useLocation } from 'react-router-dom';
-import LanguageModal from './LanguageModal';
-import { useTranslation } from 'react-i18next';
 
 const Menu = () => {
+  const { logout } = useContext(AppContext);
+
   const location = useLocation();
   const [languageModal, setLanguageModal] = useState(false);
 
   const toggleLanguageModal = () => setLanguageModal(!languageModal);
 
   const { t } = useTranslation();
+
+  const handelLogaout = () => {
+    logout();
+  };
 
   return (
     <>
@@ -89,7 +103,10 @@ const Menu = () => {
           </div>
           <p className="text-sm sm:text-base">{t('language')}</p>
         </button>
-        <button className="w-full flex items-center justify-start gap-3 p-4 text-customBlack-100 rounded-md bg-white hover:bg-gray-50 transition-all">
+        <button
+          onClick={handelLogaout}
+          className="w-full flex items-center justify-start gap-3 p-4 text-customBlack-100 rounded-md bg-white hover:bg-gray-50 transition-all"
+        >
           <div className="text-xl">
             <FaSignOutAlt />
           </div>

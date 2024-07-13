@@ -1,13 +1,16 @@
 import { FaXmark } from 'react-icons/fa6';
-import i18n from '../i18n';
+// import i18n from '../i18n';
+import { useContext } from 'react';
+import { AppContext } from '../context/Context';
 
 // eslint-disable-next-line react/prop-types
 const LanguageModal = ({ isOpen, onClose }) => {
+  const { language, changeLanguage } = useContext(AppContext);
   if (!isOpen) return null;
 
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-    onClose(); // Close the modal after changing the language
+  const handleLanguageChange = (lng) => {
+    changeLanguage(lng);
+    onClose();
   };
 
   return (
@@ -29,20 +32,32 @@ const LanguageModal = ({ isOpen, onClose }) => {
         </div>
         <div className="flex flex-col gap-4">
           <button
-            onClick={() => changeLanguage('tm')}
-            className="w-full border-2 border-primary-100 text-sm sm:text-base text-center font-semibold p-3 rounded-md bg-primary-100 text-white transition-all"
+            onClick={() => handleLanguageChange('tm')}
+            className={
+              language === 'tm'
+                ? 'w-full border-2 border-primary-100 text-sm sm:text-base text-center font-semibold p-3 rounded-md bg-primary-100 text-white transition-all'
+                : 'w-full border-2 border-primary-100 text-sm sm:text-base text-center font-semibold p-3 rounded-md hover:bg-primary-100 text-primary-100 hover:text-white transition-all'
+            }
           >
             Turkmen
           </button>
           <button
-            onClick={() => changeLanguage('ru')}
-            className="w-full border-2 border-primary-100 text-sm sm:text-base text-center font-semibold p-3 rounded-md hover:bg-primary-100 text-primary-100 hover:text-white transition-all"
+            onClick={() => handleLanguageChange('ru')}
+            className={
+              language === 'ru'
+                ? 'w-full border-2 border-primary-100 text-sm sm:text-base text-center font-semibold p-3 rounded-md bg-primary-100 text-white transition-all'
+                : 'w-full border-2 border-primary-100 text-sm sm:text-base text-center font-semibold p-3 rounded-md hover:bg-primary-100 text-primary-100 hover:text-white transition-all'
+            }
           >
             Russian
           </button>
           <button
-            onClick={() => changeLanguage('en')}
-            className="w-full border-2 border-primary-100 text-sm sm:text-base text-center font-semibold p-3 rounded-md hover:bg-primary-100 text-primary-100 hover:text-white transition-all"
+            onClick={() => handleLanguageChange('en')}
+            className={
+              language === 'en'
+                ? 'w-full border-2 border-primary-100 text-sm sm:text-base text-center font-semibold p-3 rounded-md bg-primary-100 text-white transition-all'
+                : 'w-full border-2 border-primary-100 text-sm sm:text-base text-center font-semibold p-3 rounded-md hover:bg-primary-100 text-primary-100 hover:text-white transition-all'
+            }
           >
             English
           </button>

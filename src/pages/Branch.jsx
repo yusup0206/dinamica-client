@@ -1,9 +1,13 @@
-import Slider from '../components/Slider';
+import AboutBranch from '../components/AboutBranch';
+import ActivitySlider from '../components/ActivitySlider';
+import BannerSlider from '../components/BannerSlider';
 
 const Branch = () => {
   return (
     <div className="py-10 flex flex-col gap-10">
-      <Slider />
+      <BannerSlider />
+      <AboutBranch />
+      <ActivitySlider />
     </div>
   );
 };

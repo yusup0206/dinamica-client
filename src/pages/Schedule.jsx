@@ -1,11 +1,6 @@
-import { useContext } from 'react';
 import Menu from '../components/Menu';
-import { AppContext } from '../context/Context';
 
 const Schedule = () => {
-  const { user, login, logout, language, changeLanguage } =
-    useContext(AppContext);
-  console.log(user, login, logout, language, changeLanguage);
   return (
     <section>
       <div className="container">

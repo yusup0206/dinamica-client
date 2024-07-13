@@ -6,5 +6,7 @@
   "payments": "Payments",
   "messages": "Messages",
   "language": "Language",
-  "logout": "Logout"
+  "logout": "Logout",
+  "mobile-number": "Mobile Number",
+  "password": "Password"
 }

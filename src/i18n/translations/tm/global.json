@@ -6,5 +6,7 @@
   "payments": "Tölegler",
   "messages": "Habarlar",
   "language": "Dil",
-  "logout": "Hasapdan çykmak"
+  "logout": "Hasapdan çykmak",
+  "mobile-number": "El nomer",
+  "password": "Parol"
 }
