@@ -1,36 +1,16 @@
 import { Navigation, A11y } from 'swiper/modules';
-
 import { Swiper, SwiperSlide } from 'swiper/react';
+import PropTypes from 'prop-types';
 
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-// import { ImImages } from 'react-icons/im';
 
-const branches = [
-  {
-    id: '1',
-    path: '/branch',
-    name: 'Dinamica',
-    image: '/assets/images/slide.jpg',
-  },
-  {
-    id: '2',
-    path: '/branch',
-    name: 'Dinamica Ladies',
-    image: '/assets/images/slide.jpg',
-  },
-  {
-    id: '3',
-    path: '/branch',
-    name: 'Dinamica 3',
-    image: '/assets/images/slide.jpg',
-  },
-];
+const BannerSlider = (props) => {
+  const sliders = props.sliders;
 
-const BannerSlider = () => {
   return (
     <section>
       <div className="container">
@@ -43,17 +23,17 @@ const BannerSlider = () => {
               slidesPerView={1}
               navigation
               pagination={{ clickable: true }}
-              onSwiper={(swiper) => console.log(swiper)}
-              onSlideChange={() => console.log('slide change')}
+              // onSwiper={(swiper) => console.log(swiper)}
+              // onSlideChange={() => console.log('slide change')}
               loop={true}
             >
-              {branches.map((branch) => (
+              {sliders.map((slide) => (
                 <SwiperSlide
-                  key={branch.id}
+                  key={slide.id}
                   className="w-full h-[40vh] flex items-center justify-center shadow-lg"
                 >
                   <img
-                    src={branch.image}
+                    src={slide.image}
                     alt=""
                     className="w-full h-full object-cover rounded-md"
                   />
@@ -65,6 +45,15 @@ const BannerSlider = () => {
       </div>
     </section>
   );
+};
+
+BannerSlider.propTypes = {
+  sliders: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default BannerSlider;

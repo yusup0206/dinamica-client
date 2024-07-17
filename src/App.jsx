@@ -28,7 +28,7 @@ function App() {
         <BrowserRouter>
           <AppContextProvider>
             <Header />
-            <main className="mt-[70px] sm:mt-[82px] mb-[66px] sm:mb-0 min-page-height bg-gray-100">
+            <main className="mt-[54px] sm:mt-[82px] mb-[66px] sm:mb-0 min-page-height bg-gray-100">
               <ToastContainer />
 
               <Routes>

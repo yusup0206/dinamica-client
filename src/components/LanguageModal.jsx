@@ -51,7 +51,7 @@ const LanguageModal = ({ isOpen, onClose }) => {
           >
             Russian
           </button>
-          <button
+          {/* <button
             onClick={() => handleLanguageChange('en')}
             className={
               language === 'en'
@@ -60,7 +60,7 @@ const LanguageModal = ({ isOpen, onClose }) => {
             }
           >
             English
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

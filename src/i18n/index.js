@@ -3,15 +3,15 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 // Import translations
-import translationEN from './translations/en/global.json';
+// import translationEN from './translations/en/global.json';
 import translationRU from './translations/ru/global.json';
 import translationTM from './translations/tm/global.json';
 
 // the translations
 const resources = {
-  en: {
-    translation: translationEN,
-  },
+  // en: {
+  //   translation: translationEN,
+  // },
   ru: {
     translation: translationRU,
   },
@@ -25,7 +25,7 @@ i18n
   .init({
     resources,
     lng: 'tm', // default language
-    fallbackLng: 'en', // fallback language
+    fallbackLng: 'ru', // fallback language
     interpolation: {
       escapeValue: false, // react already safes from xss
     },

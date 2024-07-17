@@ -1,5 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
-
+import { createContext, useEffect, useState, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import i18n from '../i18n/index';
@@ -10,81 +9,74 @@ export const AppContext = createContext();
 // eslint-disable-next-line react/prop-types
 const AppContextProvider = ({ children }) => {
   const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem('user')) || null
+    () => JSON.parse(localStorage.getItem('user')) || null
   );
   const [language, setLanguage] = useState(
-    localStorage.getItem('language') || 'tm'
+    () => localStorage.getItem('language') || 'tm'
   );
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(!!localStorage.getItem('access_token'));
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     localStorage.setItem('language', language);
-  }, [language]);
-
-  // useEffect(() => {
-  //   if (user) {
-  //     localStorage.setItem('user', JSON.stringify(user));
-  //   } else {
-  //     localStorage.removeItem('user');
-  //   }
-  // }, [user]);
-
-  useEffect(() => {
     i18n.changeLanguage(language);
   }, [language]);
 
-  // Function to display error toast
-  const showErrorToast = (errorMessage) => {
-    toast.error(errorMessage);
-  };
-
-  // Function to display success toast
-  const showSuccessToast = (message) => {
-    toast.success(message);
-  };
-
-  const login = (userData) => {
-    try {
-      setUser(userData);
-      localStorage.setItem('access_token', userData.access_token);
-      setIsAuth(true);
-      setError('');
-      showSuccessToast('Login successful');
-      navigate('/schedule');
-    } catch (error) {
-      setError(error);
-      setIsAuth(false);
-      showErrorToast('Failed to login');
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('user');
     }
-    // setUser(userData);
-    // if (userData.number === '65123456' && userData.password === '123') {
-    //   setUser(userData);
-    //   setIsAuth(true);
-    //   setError('');
-    //   showSuccessToast('Login successful');
-    //   navigate('/home');
-    // } else {
-    //   setError('Invalid credentials');
-    //   setIsAuth(false);
-    //   showErrorToast('Invalid credentials');
-    // }
-  };
+  }, [user]);
 
-  const logout = () => {
+  const showErrorToast = useCallback((errorMessage) => {
+    toast.error(errorMessage);
+  }, []);
+
+  const showSuccessToast = useCallback((message) => {
+    toast.success(message);
+  }, []);
+
+  const login = useCallback(
+    (userData) => {
+      try {
+        const { user, access_token } = userData;
+        setUser(user);
+        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('access_token', access_token);
+        setIsAuth(true);
+        setError('');
+        showSuccessToast('Login successful');
+        navigate('/home');
+      } catch (error) {
+        setError(error.message);
+        setIsAuth(false);
+        showErrorToast('Failed to login');
+      }
+    },
+    [showSuccessToast, showErrorToast, navigate]
+  );
+
+  const logout = useCallback(() => {
     setUser(null);
+    localStorage.removeItem('user');
     localStorage.removeItem('access_token');
     setIsAuth(false);
     showSuccessToast('Logged out successfully');
     navigate('/home');
-  };
+  }, [showSuccessToast, navigate]);
 
-  const changeLanguage = (lng) => {
-    setLanguage(lng);
-    i18n.changeLanguage(lng);
-    showSuccessToast(`Language changed to ${lng.toUpperCase()}`);
-  };
+  const changeLanguage = useCallback(
+    (lng) => {
+      setLanguage(lng);
+      showSuccessToast(`Language changed to ${lng.toUpperCase()}`);
+    },
+    [showSuccessToast]
+  );
 
   return (
     <AppContext.Provider
@@ -96,6 +88,8 @@ const AppContextProvider = ({ children }) => {
         changeLanguage,
         isAuth,
         error,
+        loading,
+        setLoading,
         showErrorToast,
         showSuccessToast,
       }}

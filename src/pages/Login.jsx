@@ -4,6 +4,7 @@ import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AppContext } from '../context/Context';
 import axiosInstance from '../axiosInstance';
+import { LuLoader2 } from 'react-icons/lu';
 
 const Login = () => {
   const { t } = useTranslation();
@@ -11,7 +12,7 @@ const Login = () => {
   // const [number, setNumber] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login, showErrorToast } = useContext(AppContext);
+  const { login, showErrorToast, loading, setLoading } = useContext(AppContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,13 +22,17 @@ const Login = () => {
       return;
     }
     const userData = { email, password };
+
+    setLoading(true);
+
     try {
       const response = await axiosInstance.post('/auth/login', userData);
-
       login(response.data);
     } catch (error) {
       console.log('login failed', error);
-      showErrorToast('Invalid credentials');
+      showErrorToast(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -83,8 +88,16 @@ const Login = () => {
                 />
               </div>
             </div>
-            <button className="w-full p-2 text-center text-white text-sm sm:text-base bg-primary-100 hover:bg-opacity-90 rounded-md transition-all">
-              Login
+            <button
+              className="w-full p-2 flex items-center justify-center text-center text-white text-sm sm:text-base bg-primary-100 hover:bg-opacity-90 rounded-md transition-all"
+              disabled={loading}
+            >
+              {/* Login */}
+              {loading ? (
+                <LuLoader2 className="animate-spin text-xl sm:text-2xl " />
+              ) : (
+                t('login')
+              )}
             </button>
           </form>
         </div>

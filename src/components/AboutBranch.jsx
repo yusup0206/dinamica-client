@@ -6,22 +6,19 @@ import {
   FaWhatsapp,
 } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import SectionHeader from './SectionHeader';
 
 const AboutBranch = () => {
   return (
     <section>
       <div className="container">
         <div className="w-full px-5 sm:px-10 flex flex-col gap-5">
-          <div className="text-center text-balance">
-            <h1 className="text-primary-100 text-2xl sm:text-3xl font-semibold mb-2">
-              About Us
-            </h1>
-            <p className="text-customBlack-100 text-sm sm:text-base">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eius
-              optio numquam officia corrupti similique nulla quasi odit minus
-              ratione, laudantium in doloremque est necessitatibus maiores!
-            </p>
-          </div>
+          <SectionHeader
+            name={'About Us'}
+            description={
+              'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eius optio numquam officia corrupti similique nulla quasi odit minus ratione, laudantium in doloremque est necessitatibus maiores!'
+            }
+          />
           <div className="px-4 py-8 bg-primary-100 rounded-md shadow-lg">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
               <div className="flex gap-3 items-center justify-center">
