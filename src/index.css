@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #1f2937;
+  --color-secondary: #1a1a6d;
+  --color-headerColor: #2a2823;
+  --color-textColor: #2a2823;
+  --color-bgColor: #e8e9eb;
+}
+
+.container {
+  @apply max-w-7xl w-full mx-auto;
+}
