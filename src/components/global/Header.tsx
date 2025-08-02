@@ -27,7 +27,7 @@ const Header = () => {
       <nav className="sticky top-0 left-0 z-40 w-full bg-white ">
         <div className="container">
           <div className="w-full px-5 sm:px-10 py-3 flex items-center justify-between gap-4">
-            <Link to={"/home"}>
+            <Link to="/">
               <h1 className="text-primary text-xl font-semibold mb-0">
                 DINAMICA
               </h1>
@@ -41,10 +41,11 @@ const Header = () => {
                 onClick={showModal}
               />
               <Modal
-                title="Choose language"
+                title={language === "tm" ? "Dil saýlaň" : "Выберите язык"}
                 open={languageModalOpen}
                 onCancel={handleCancel}
                 footer={false}
+                centered
               >
                 <div className="flex flex-col gap-4 mt-4">
                   <Button

@@ -33,3 +33,24 @@ export interface CenterSingle {
   type: string;
   work_time_text: string;
 }
+
+export interface CenterInfoProps {
+  center: CenterSingle | undefined;
+  isLoading: boolean;
+}
+
+export interface CenterSocialMedia {
+  id: number;
+  center_id: number;
+  link: string;
+  icon: string;
+}
+
+export interface CenterSocialMedias {
+  socialMedias: CenterSocialMedia[];
+}
+
+export interface CenterSocialMediaProps {
+  socialMedias: CenterSocialMedia[] | undefined;
+  isLoading: boolean;
+}

@@ -28,3 +28,16 @@ export const useGetPost = (slug?: string) => {
   });
   return { data, isLoading, error };
 };
+
+export const useGetCenterPosts = (slug?: string) => {
+  const language = useAppStore((state) => state.language);
+
+  const { data, isLoading, error } = useQuery<ApiResponse<Posts>>({
+    queryKey: ["centerPosts", language, slug],
+    queryFn: async () => {
+      return await api.get(`/center/${slug}/posts`);
+    },
+    enabled: !!slug,
+  });
+  return { data, isLoading, error };
+};

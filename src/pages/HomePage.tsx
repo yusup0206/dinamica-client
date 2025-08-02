@@ -6,7 +6,7 @@ import { useGetCenters } from "../hooks/useCenterApi";
 import { useGetPosts } from "../hooks/usePostApi";
 
 const HomePage = () => {
-  const { data: banners, isLoading: bannerLoading } = useGetBanners();
+  const { data: banners, isLoading: bannersLoading } = useGetBanners();
   const { data: centers, isLoading: centersLoading } = useGetCenters();
   const { data: posts, isLoading: postsLoading } = useGetPosts();
 
@@ -14,7 +14,7 @@ const HomePage = () => {
     <>
       <BannerSlider
         banners={banners?.data?.sliders}
-        isLoading={bannerLoading}
+        isLoading={bannersLoading}
       />
       <Centers centers={centers?.data?.centers} isLoading={centersLoading} />
       <Posts posts={posts?.data?.posts} isLoading={postsLoading} />

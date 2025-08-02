@@ -1,20 +1,21 @@
 import type { FC } from "react";
 import type { PostProps } from "../../interfaces/posts.interface";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
-const Posts: FC<PostProps> = ({ posts, isLoading }) => {
+const CenterPosts: FC<PostProps> = ({ posts, isLoading }) => {
+  const { slug } = useParams();
   if (isLoading) return <div>Loading...</div>;
-
+  console.log(slug);
   return (
     <section className="w-full">
       <div className="container">
         <div className="w-full px-5 md:px-10 py-5 grid grid-cols-12 gap-4">
           <h1 className="text-primary text-xl md:text-2xl font-semibold col-span-12">
-            Posts
+            Center Posts
           </h1>
           {posts?.map((post) => (
             <Link
-              to={`/post/${post.slug}`}
+              to={`/center/${slug}/post/${post.slug}`}
               key={post.id}
               className="group w-full col-span-12 md:col-span-6 lg:col-span-4"
             >
@@ -37,4 +38,4 @@ const Posts: FC<PostProps> = ({ posts, isLoading }) => {
   );
 };
 
-export default Posts;
+export default CenterPosts;

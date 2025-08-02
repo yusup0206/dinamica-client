@@ -6,7 +6,7 @@ const Centers: FC<CenterProps> = ({ centers, isLoading }) => {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <div className="w-full">
+    <section className="w-full">
       <div className="container">
         <div className="w-full px-5 md:px-10 py-5 grid grid-cols-12 gap-4">
           <h1 className="text-primary text-xl md:text-2xl font-semibold col-span-12">
@@ -35,7 +35,7 @@ const Centers: FC<CenterProps> = ({ centers, isLoading }) => {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

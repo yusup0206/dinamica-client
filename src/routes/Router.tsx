@@ -23,6 +23,8 @@ const Router = () => {
         { path: "center/:slug", element: <CenterPage /> },
         { path: "posts", element: <PostsPage /> },
         { path: "post/:slug", element: <PostPage /> },
+        { path: "center/posts", element: <PostsPage /> },
+        { path: "center/:slug/post/:slug", element: <PostPage /> },
       ],
     },
   ]);
