@@ -2,12 +2,17 @@ import { lazy, Suspense } from "react";
 import { useRoutes } from "react-router-dom";
 
 import Layout from "../layouts/Layout";
+import ProfileLayout from "../layouts/ProfileLayout";
+import PaymentsPage from "../pages/PaymentsPage";
+import ProtectedRoute from "../components/global/ProtectedRoute";
 
 // pages
 const HomePage = lazy(() => import("../pages/HomePage"));
 const CenterPage = lazy(() => import("../pages/CenterPage"));
 const PostsPage = lazy(() => import("../pages/PostsPage"));
 const PostPage = lazy(() => import("../pages/PostPage"));
+const LoginPage = lazy(() => import("../pages/LoginPage"));
+const SchedulePage = lazy(() => import("../pages/SchedulePage"));
 
 const Router = () => {
   const routes = useRoutes([
@@ -25,6 +30,25 @@ const Router = () => {
         { path: "post/:slug", element: <PostPage /> },
         { path: "center/posts", element: <PostsPage /> },
         { path: "center/:slug/post/:slug", element: <PostPage /> },
+        { path: "login", element: <LoginPage /> },
+        {
+          path: "profile",
+          element: <ProtectedRoute />,
+          children: [
+            {
+              element: (
+                <Suspense fallback={<div>Loading profile...</div>}>
+                  <ProfileLayout />
+                </Suspense>
+              ),
+              children: [
+                { path: "schedule", element: <SchedulePage /> },
+                { path: "payments", element: <PaymentsPage /> },
+                { path: "messages", element: <PaymentsPage /> },
+              ],
+            },
+          ],
+        },
       ],
     },
   ]);

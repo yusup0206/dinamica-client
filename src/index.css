@@ -11,3 +11,19 @@
 .container {
   @apply max-w-7xl w-full mx-auto;
 }
+
+.ant-form-item {
+  margin: 0px !important;
+}
+
+.ant-form-item-label {
+  padding: 0px !important;
+}
+
+.ant-divider-horizontal {
+  margin: 0px !important;
+}
+
+.alignStart {
+  text-align: start !important;
+}

@@ -1,7 +1,19 @@
 import { create } from "zustand";
-import { QueryClient } from "@tanstack/react-query"; // Import QueryClient
+import { QueryClient } from "@tanstack/react-query";
+import dayjs from "dayjs";
+
+import "dayjs/locale/ru";
+import "dayjs/locale/tk";
 
 type Language = "tm" | "ru";
+
+const dayjsLocaleMap: Record<Language, string> = {
+  tm: "tk",
+  ru: "ru",
+};
+
+const initialLang = (localStorage.getItem("language") as Language) || "tm";
+dayjs.locale(dayjsLocaleMap[initialLang]);
 
 interface AuthState {
   token: string | null;
@@ -11,21 +23,40 @@ interface AuthState {
   setLanguageModalOpen: (open: boolean) => void;
 
   language: Language;
-  setLanguage: (lang: Language, queryClient: QueryClient) => void; // Pass queryClient
+  setLanguage: (lang: Language, queryClient: QueryClient) => void;
+
+  user: object | null;
+  setUser: (user: object | null) => void;
 }
 
 export const useAppStore = create<AuthState>((set) => ({
-  token: null,
-  setToken: (token) => set({ token }),
+  token: localStorage.getItem("access_token"),
+
+  user: null,
 
   languageModalOpen: false,
+
+  language: initialLang,
+
+  setToken: (token) => {
+    if (token) {
+      localStorage.setItem("access_token", token);
+    } else {
+      localStorage.removeItem("access_token");
+    }
+    set({ token });
+  },
+
+  setUser: (user) => set({ user }),
+
   setLanguageModalOpen: (open) => set({ languageModalOpen: open }),
 
-  language: (localStorage.getItem("language") as Language) || "tm",
   setLanguage: (lang, queryClient) => {
-    // Receive queryClient here
     localStorage.setItem("language", lang);
+
+    dayjs.locale(dayjsLocaleMap[lang]);
+
     set({ language: lang });
-    queryClient.invalidateQueries(); // Now you can use it
+    queryClient.invalidateQueries();
   },
 }));

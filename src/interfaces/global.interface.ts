@@ -9,3 +9,8 @@ export interface ApiResponse<T> {
 export interface CenterApiResponse {
   center: CenterSingle;
 }
+
+export interface SelectOption {
+  label: string;
+  value: string;
+}

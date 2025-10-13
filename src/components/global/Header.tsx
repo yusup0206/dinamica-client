@@ -13,14 +13,12 @@ const Header = () => {
   );
   const setLanguage = useAppStore((state) => state.setLanguage);
 
-  const showModal = () => setLanguageModalOpen(true);
-  const handleCancel = () => setLanguageModalOpen(false);
-
   const handleLanguageChange = (lang: "tm" | "ru") => {
     setLanguage(lang, queryClient);
     setLanguageModalOpen(false);
   };
   const language = useAppStore((state) => state.language);
+  const token = useAppStore((state) => state.token);
 
   return (
     <header className="sticky top-0 z-40">
@@ -33,17 +31,20 @@ const Header = () => {
               </h1>
             </Link>
             <div className="flex items-center justify-center gap-4">
-              <Button icon={<UserOutlined />} type="primary" size="large" />
+              <Link to={token ? "/profile" : "/login"}>
+                <Button icon={<UserOutlined />} type="primary" size="large" />
+              </Link>
               <Button
                 icon={<GlobalOutlined />}
                 type="primary"
                 size="large"
-                onClick={showModal}
+                onClick={() => setLanguageModalOpen(true)}
               />
+
               <Modal
                 title={language === "tm" ? "Dil saýlaň" : "Выберите язык"}
                 open={languageModalOpen}
-                onCancel={handleCancel}
+                onCancel={() => setLanguageModalOpen(false)}
                 footer={false}
                 centered
               >
