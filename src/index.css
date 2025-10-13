@@ -27,3 +27,27 @@
 .alignStart {
   text-align: start !important;
 }
+
+/* Removes arrows for Chrome, Safari, Edge, and Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Removes arrows for Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.pageHeight {
+  height: fit-content;
+  min-height: calc(100vh - 64px - 80px);
+}
+
+@media (min-width: 768px) {
+  .pageHeight {
+    height: fit-content;
+    min-height: calc(100vh - 52px - 80px);
+  }
+}

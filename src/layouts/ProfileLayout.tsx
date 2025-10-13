@@ -9,7 +9,7 @@ const ProfileLayout = () => {
           <div className="w-full max-w-80 hidden md:flex">
             <ProfileMenu />
           </div>
-          <div className="w-full">
+          <div className="w-full bg-bgColor">
             <Outlet />
           </div>
         </div>

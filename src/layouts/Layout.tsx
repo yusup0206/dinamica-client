@@ -8,7 +8,7 @@ const Layout = () => {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-bgColor text-textColor py-5">
+      <main className="pageHeight bg-bgColor text-textColor py-5 mt-[52px] md:mt-[64px] pb-[80px] md:pb-0">
         <Outlet />
       </main>
       <Footer />

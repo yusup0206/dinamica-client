@@ -1,72 +1,39 @@
-import { GlobalOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Modal } from "antd";
-import { Link } from "react-router-dom";
+import { CaretLeftOutlined, UserOutlined } from "@ant-design/icons";
+import { Button } from "antd";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppStore } from "../../stores/store";
-import { useQueryClient } from "@tanstack/react-query";
+import LangModal from "./LangModal";
 
 const Header = () => {
-  const queryClient = useQueryClient();
-
-  const languageModalOpen = useAppStore((state) => state.languageModalOpen);
-  const setLanguageModalOpen = useAppStore(
-    (state) => state.setLanguageModalOpen
-  );
-  const setLanguage = useAppStore((state) => state.setLanguage);
-
-  const handleLanguageChange = (lang: "tm" | "ru") => {
-    setLanguage(lang, queryClient);
-    setLanguageModalOpen(false);
-  };
-  const language = useAppStore((state) => state.language);
   const token = useAppStore((state) => state.token);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   return (
-    <header className="sticky top-0 z-40">
-      <nav className="sticky top-0 left-0 z-40 w-full bg-white ">
+    <header className="fixed top-0 left-0 z-40 w-full">
+      <nav className="w-full bg-white ">
         <div className="container">
-          <div className="w-full px-5 sm:px-10 py-3 flex items-center justify-between gap-4">
-            <Link to="/">
-              <h1 className="text-primary text-xl font-semibold mb-0">
-                DINAMICA
-              </h1>
-            </Link>
-            <div className="flex items-center justify-center gap-4">
+          <div className="w-full px-5 md:px-10 py-3 flex items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              {location.pathname.includes("home") ? null : (
+                <Button
+                  onClick={() => navigate(-1)}
+                  type="text"
+                  size="small"
+                  icon={<CaretLeftOutlined />}
+                />
+              )}
+              <Link to="/home">
+                <span className="text-primary text-xl font-semibold mb3-0">
+                  DINAMICA
+                </span>
+              </Link>
+            </div>
+            <div className="hidden md:flex items-center justify-center gap-4">
+              <LangModal />
               <Link to={token ? "/profile" : "/login"}>
                 <Button icon={<UserOutlined />} type="primary" size="large" />
               </Link>
-              <Button
-                icon={<GlobalOutlined />}
-                type="primary"
-                size="large"
-                onClick={() => setLanguageModalOpen(true)}
-              />
-
-              <Modal
-                title={language === "tm" ? "Dil saýlaň" : "Выберите язык"}
-                open={languageModalOpen}
-                onCancel={() => setLanguageModalOpen(false)}
-                footer={false}
-                centered
-              >
-                <div className="flex flex-col gap-4 mt-4">
-                  <Button
-                    type={language === "tm" ? "primary" : "default"}
-                    size="large"
-                    className="w-full"
-                    onClick={() => handleLanguageChange("tm")}
-                  >
-                    Türkmen
-                  </Button>
-                  <Button
-                    type={language === "ru" ? "primary" : "default"}
-                    size="large"
-                    className="w-full"
-                    onClick={() => handleLanguageChange("ru")}
-                  >
-                    Русский
-                  </Button>
-                </div>
-              </Modal>
             </div>
           </div>
         </div>
