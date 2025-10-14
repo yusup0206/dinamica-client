@@ -39,7 +39,6 @@ interface AuthState {
   language: Language;
   setLanguage: (lang: Language, queryClient: QueryClient) => void;
 
-  // Type can be adjusted from 'object | null' to a specific User type if defined
   user: any | null;
   setUser: (user: any | null) => void;
 }
@@ -47,7 +46,6 @@ interface AuthState {
 export const useAppStore = create<AuthState>((set) => ({
   token: localStorage.getItem("access_token"),
 
-  // FIX: Load user from localStorage on initialization
   user: getInitialUser(),
 
   languageModalOpen: false,
