@@ -7,12 +7,14 @@ import type { Tariff } from "../interfaces/tariff.interface";
 import { useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
 import type { Attendance } from "../interfaces/schedule.interface";
+import { useAppStore } from "../stores/store";
 
 const { Text } = Typography;
 
 const SchedulePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const tariffId = searchParams.get("tariffId") || "";
+  const language = useAppStore((state) => state.language);
 
   // states
   const [tariffOptions, setTariffOptions] = useState<SelectOption[]>([]);
@@ -24,17 +26,18 @@ const SchedulePage = () => {
   const [selectedAttendances, setSelectedAttendances] = useState<Attendance[]>(
     []
   );
+  const [activeDates, setActiveDates] = useState<Set<string>>(new Set());
 
   // queries
   const { data: schedule, isLoading: scheduleLoading } =
     useGetSchedule(tariffId);
-  const { data: getCilentTariffs, isLoading: tariffsLoading } =
+  const { data: getClientTariffs, isLoading: tariffsLoading } =
     useGetClientTariffs();
-  console.log(schedule);
-  // functions
+
+  // prepare tariff options
   useEffect(() => {
-    if (getCilentTariffs?.data.data) {
-      const options: SelectOption[] = getCilentTariffs.data.data.map(
+    if (getClientTariffs?.data?.data) {
+      const options: SelectOption[] = getClientTariffs.data.data.map(
         (tariff: Tariff) => ({
           label: tariff.tariff.name,
           value: String(tariff.tariff.id),
@@ -42,14 +45,16 @@ const SchedulePage = () => {
       );
       setTariffOptions(options);
     }
-  }, [getCilentTariffs]);
+  }, [getClientTariffs]);
 
+  // set default tariff
   useEffect(() => {
     if (tariffOptions.length > 0 && !tariffId) {
       setSearchParams({ tariffId: tariffOptions[0].value });
     }
   }, [tariffOptions, tariffId, setSearchParams]);
 
+  // group attendances by date
   useEffect(() => {
     if (schedule?.data?.data?.attendances) {
       const map: Record<string, Attendance[]> = {};
@@ -58,6 +63,25 @@ const SchedulePage = () => {
         map[item.date].push(item);
       });
       setScheduleByDate(map);
+    }
+  }, [schedule]);
+
+  // generate active date range (from_date → to_date)
+  useEffect(() => {
+    if (schedule?.data?.data?.clientTariff) {
+      const { from_date, to_date } = schedule.data.data.clientTariff;
+      const start = dayjs(from_date);
+      const end = dayjs(to_date);
+
+      const active = new Set<string>();
+      let current = start.clone();
+
+      while (current.isBefore(end) || current.isSame(end, "day")) {
+        active.add(current.format("YYYY-MM-DD"));
+        current = current.add(1, "day");
+      }
+
+      setActiveDates(active);
     }
   }, [schedule]);
 
@@ -75,19 +99,33 @@ const SchedulePage = () => {
     }
   };
 
+  // ✅ Updated calendar cell render
   const dateCellRender = (value: dayjs.Dayjs) => {
     const dateStr = value.format("YYYY-MM-DD");
     const listData = scheduleByDate[dateStr] || [];
+    const isActive = activeDates.has(dateStr);
 
     return (
-      <ul className="p-1 space-y-1">
-        {listData.map((item) => (
-          <li key={item.id} className="flex flex-col gap-1">
-            <Badge status="success" text={item.came_at || ""} />
-            {item.gone_at && <Badge status="error" text={item.gone_at || ""} />}
-          </li>
-        ))}
-      </ul>
+      <div
+        className={`rounded-md p-1 ${
+          isActive ? "bg-primary/10 border border-primary" : ""
+        }`}
+      >
+        {listData.length > 0 ? (
+          <ul className="space-y-1">
+            {listData.map((item) => (
+              <li key={item.id} className="flex flex-col gap-1">
+                <Badge status="success" text={item.came_at || ""} />
+                {item.gone_at && (
+                  <Badge status="error" text={item.gone_at || ""} />
+                )}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          isActive && <span className="text-primary text-xs font-medium"></span>
+        )}
+      </div>
     );
   };
 
@@ -95,7 +133,7 @@ const SchedulePage = () => {
     <div className="w-full flex flex-col gap-4">
       <Box className="flex items-center justify-between gap-4">
         <h3 className="text-headerColor text-lg md:text-xl font-semibold">
-          Payments
+          {language === "tm" ? "Gatnaw tertibi" : "Расписание"}
         </h3>
         <div className="flex items-center gap-4">
           <Select
@@ -115,12 +153,18 @@ const SchedulePage = () => {
             <Spin size="large" />
           </div>
         ) : (
-          <Calendar cellRender={dateCellRender} onSelect={handleDateClick} />
+          <>
+            <p className="text-textColor text-sm md:text-base font-semibold text-end mb-4">
+              {language === "tm" ? "Elýeterli : " : "Доступный : "}
+              {schedule?.data?.data.clientTariff.available_strikes}
+            </p>
+            <Calendar cellRender={dateCellRender} onSelect={handleDateClick} />
+          </>
         )}
       </Box>
 
       <Modal
-        title={`Attendance for ${dayjs(selectedDate).format("DD-MM-YYYY")}`}
+        title={`${dayjs(selectedDate).format("DD-MM-YYYY")}`}
         open={modalVisible}
         footer={null}
         onCancel={() => setModalVisible(false)}
@@ -128,21 +172,22 @@ const SchedulePage = () => {
       >
         {selectedAttendances.map((item) => (
           <div key={item.id} className="mb-3">
-            <Text strong>Client ID:</Text> <Text>{item.client_id}</Text>
+            <Text strong>ID : </Text> <Text>{item.client_id}</Text>
             <br />
-            <Text strong>Came At:</Text>{" "}
-            <Badge
-              status="success"
-              text={item.came_at.replace("Gelen wagty :", "").trim()}
-            />
+            <Text strong>
+              {language === "tm" ? "Gelen wagty : " : "Пришел в : "}
+            </Text>
+            <Badge status="success" text={item.came_at} />
             <br />
-            <Text strong>Gone At:</Text>{" "}
-            <Badge
-              status={item.gone_at ? "error" : "warning"}
-              text={item.gone_at?.replace("Giden wagty :", "").trim() || "-"}
-            />
+            <Text strong>
+              {language === "tm" ? "Giden wagty : " : "Ушел в : "}
+            </Text>
+            <Badge status="error" text={item.gone_at || "-"} />
             <br />
-            <Text strong>Total Hours:</Text> <Text>{item.total_hours}</Text>
+            <Text strong>
+              {language === "tm" ? "Jemi sagat : " : "Всего часов : "}
+            </Text>
+            <Text>{item.total_hours}</Text>
             <br />
           </div>
         ))}

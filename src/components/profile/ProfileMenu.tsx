@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, message } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Box from "../global/Box";
 import {
@@ -9,11 +9,13 @@ import {
 } from "@ant-design/icons";
 import { useLogoutMutation } from "../../hooks/useClientApi";
 import { useAppStore } from "../../stores/store";
+import ProfileImage from "./ProfileImage";
 
 const ProfileMenu = () => {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
   const location = useLocation();
   const navigate = useNavigate();
+  const language = useAppStore((state) => state.language);
 
   const setUser = useAppStore((state) => state.setUser);
   const setToken = useAppStore((state) => state.setToken);
@@ -30,19 +32,19 @@ const ProfileMenu = () => {
       setToken(null);
       localStorage.removeItem("access_token");
       localStorage.removeItem("user");
-
+      message.success(
+        language === "tm" ? "Üstünlikli çykyş edildi" : "Успешно выполнено"
+      );
       navigate("/login");
     } catch (error) {
       console.error(error);
     }
   };
-
+  console.log(user.avatar);
   return (
     <div className="w-full h-fit   flex flex-col gap-4">
       <Box className="flex items-center justify-start gap-4 p-4">
-        <div className="size-16 rounded-md overflow-hidden">
-          <img src={user.avatar} alt={user.name} className="size-full" />
-        </div>
+        <ProfileImage src={user.avatar} name={user.name} />
         <h3 className="text-headerColor text-lg md:text-xl font-semibold">
           {user.surname} {user.name} {user.fathername}
         </h3>
@@ -57,7 +59,7 @@ const ProfileMenu = () => {
             }
             icon={<ScheduleFilled />}
           >
-            Schedule
+            {language === "tm" ? "Gatnaw tertibi" : "Расписание"}
           </Button>
         </Link>
         <Link to="/profile/payments" className="w-full">
@@ -69,7 +71,7 @@ const ProfileMenu = () => {
             }
             icon={<CreditCardFilled />}
           >
-            Payments
+            {language === "tm" ? "Tölegler" : "Платежи"}
           </Button>
         </Link>
         <Link to="/profile/messages" className="w-full">
@@ -81,7 +83,7 @@ const ProfileMenu = () => {
             }
             icon={<BellFilled />}
           >
-            Messages
+            {language === "tm" ? "Habarlar" : "Сообщения"}
           </Button>
         </Link>
         <Button
@@ -92,7 +94,7 @@ const ProfileMenu = () => {
           onClick={handleLogout}
           loading={isPending}
         >
-          {isPending ? "Logging out..." : "Logout"}
+          {language === "tm" ? "Çykmak" : "Выход"}
         </Button>
       </Box>
     </div>

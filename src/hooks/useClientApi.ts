@@ -48,3 +48,16 @@ export const useGetSchedule = (id?: string) => {
   });
   return { data, isLoading, error };
 };
+
+export const useClientAvatarMutation = () => {
+  return useMutation({
+    mutationFn: async (image: FormData) => {
+      const response = await api.post("/client/image_upload", image, {
+        headers: {
+          "Content-Type": undefined,
+        },
+      });
+      return response.data;
+    },
+  });
+};

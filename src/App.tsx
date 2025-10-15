@@ -1,6 +1,6 @@
 import Router from "./routes/Router";
 
-import "antd/dist/reset.css";
+// import "antd/dist/reset.css";
 import { ConfigProvider, App as AntdApp } from "antd";
 import { useAppStore } from "./stores/store";
 

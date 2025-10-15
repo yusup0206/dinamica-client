@@ -15,7 +15,6 @@ const dayjsLocaleMap: Record<Language, string> = {
 const initialLang = (localStorage.getItem("language") as Language) || "tm";
 dayjs.locale(dayjsLocaleMap[initialLang]);
 
-// Function to safely get the user object from localStorage
 const getInitialUser = () => {
   const userString = localStorage.getItem("user");
   if (userString) {

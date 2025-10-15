@@ -16,12 +16,14 @@ const Header = () => {
           <div className="w-full px-5 md:px-10 py-3 flex items-center justify-between gap-4">
             <div className="flex items-center gap-2">
               {location.pathname.includes("home") ? null : (
-                <Button
-                  onClick={() => navigate(-1)}
-                  type="text"
-                  size="small"
-                  icon={<CaretLeftOutlined />}
-                />
+                <span className="flex md:hidden">
+                  <Button
+                    onClick={() => navigate(-1)}
+                    type="text"
+                    size="small"
+                    icon={<CaretLeftOutlined />}
+                  />
+                </span>
               )}
               <Link to="/home">
                 <span className="text-primary text-xl font-semibold mb3-0">
@@ -31,7 +33,7 @@ const Header = () => {
             </div>
             <div className="hidden md:flex items-center justify-center gap-4">
               <LangModal />
-              <Link to={token ? "/profile" : "/login"}>
+              <Link to={token ? "/profile/schedule" : "/login"}>
                 <Button icon={<UserOutlined />} type="primary" size="large" />
               </Link>
             </div>
