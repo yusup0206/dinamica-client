@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Posts: FC<PostProps> = ({ posts, isLoading }) => {
   if (isLoading) return <div>Loading...</div>;
-
+  console.log(posts);
   return (
     <section className="w-full">
       <div className="container">

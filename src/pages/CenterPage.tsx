@@ -22,7 +22,7 @@ const CenterPage = () => {
   const { data: centerSocialMedias, isLoading: centerSocialMediaLoading } =
     useGetCenterSocialMedia(slug);
 
-  console.log(center);
+  console.log(centerPosts);
 
   return (
     <>
@@ -37,7 +37,10 @@ const CenterPage = () => {
       />
       <MembershipSlider />
 
-      <CenterPosts posts={centerPosts?.data?.posts} isLoading={postsLoading} />
+      <CenterPosts
+        posts={centerPosts?.data?.data?.data}
+        isLoading={postsLoading}
+      />
     </>
   );
 };

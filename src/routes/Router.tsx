@@ -9,7 +9,7 @@ import ProtectedRoute from "../components/global/ProtectedRoute";
 // pages
 const HomePage = lazy(() => import("../pages/HomePage"));
 const CenterPage = lazy(() => import("../pages/CenterPage"));
-const PostsPage = lazy(() => import("../pages/PostsPage"));
+// const PostsPage = lazy(() => import("../pages/PostsPage"));
 const PostPage = lazy(() => import("../pages/PostPage"));
 const LoginPage = lazy(() => import("../pages/LoginPage"));
 const SchedulePage = lazy(() => import("../pages/SchedulePage"));
@@ -28,9 +28,9 @@ const Router = () => {
         { path: "/", element: <Navigate to="/home" /> },
         { path: "/home", element: <HomePage /> },
         { path: "/center/:slug", element: <CenterPage /> },
-        { path: "/posts", element: <PostsPage /> },
+        // { path: "/posts", element: <PostsPage /> },
         { path: "/post/:slug", element: <PostPage /> },
-        { path: "/center/posts", element: <PostsPage /> },
+        // { path: "/center/posts", element: <PostsPage /> },
         { path: "/center/:slug/post/:slug", element: <PostPage /> },
         { path: "/login", element: <LoginPage /> },
 

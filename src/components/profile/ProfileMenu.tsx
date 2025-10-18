@@ -40,7 +40,7 @@ const ProfileMenu = () => {
       console.error(error);
     }
   };
-  console.log(user.avatar);
+
   return (
     <div className="w-full h-fit   flex flex-col gap-4">
       <Box className="flex items-center justify-start gap-4 p-4">

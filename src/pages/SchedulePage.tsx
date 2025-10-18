@@ -114,10 +114,16 @@ const SchedulePage = () => {
         {listData.length > 0 ? (
           <ul className="space-y-1">
             {listData.map((item) => (
-              <li key={item.id} className="flex flex-col gap-1">
-                <Badge status="success" text={item.came_at || ""} />
+              <li key={item.id} className="flex gap-1">
+                <Badge
+                  status="success"
+                  // text={item.came_at || ""}
+                />
                 {item.gone_at && (
-                  <Badge status="error" text={item.gone_at || ""} />
+                  <Badge
+                    status="error"
+                    //  text={item.gone_at || ""}
+                  />
                 )}
               </li>
             ))}

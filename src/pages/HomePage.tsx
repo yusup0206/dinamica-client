@@ -6,9 +6,14 @@ import { useGetCenters } from "../hooks/useCenterApi";
 import { useGetPosts } from "../hooks/usePostApi";
 
 const HomePage = () => {
+  // queries
   const { data: banners, isLoading: bannersLoading } = useGetBanners();
   const { data: centers, isLoading: centersLoading } = useGetCenters();
-  const { data: posts, isLoading: postsLoading } = useGetPosts();
+  const { data: posts, isLoading: postsLoading } = useGetPosts({
+    page: "1",
+    limit: "3",
+  });
+  console.log(posts);
 
   return (
     <>
@@ -17,7 +22,7 @@ const HomePage = () => {
         isLoading={bannersLoading}
       />
       <Centers centers={centers?.data?.centers} isLoading={centersLoading} />
-      <Posts posts={posts?.data?.posts} isLoading={postsLoading} />
+      <Posts posts={posts?.data?.data?.data} isLoading={postsLoading} />
     </>
   );
 };

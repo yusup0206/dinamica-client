@@ -16,9 +16,11 @@ const CenterInfo: FC<CenterInfoProps> = ({ center, isLoading }) => {
             <h1 className="text-headerColor text-xl md:text-2xl font-semibold col-span-12">
               {center?.name}
             </h1>
-            <p className="text-textColor text-base md:text-lg">
-              {center?.text}
-            </p>
+            <div
+              className="text-textColor text-base md:text-lg"
+              dangerouslySetInnerHTML={{ __html: center?.text || "" }}
+            ></div>
+
             <div className="mt-4 flex flex-col gap-2">
               <div className="flex items-center gap-2 text-primary">
                 <ClockCircleFilled className="text-2xl" />
