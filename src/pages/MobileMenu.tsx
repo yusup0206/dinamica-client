@@ -4,7 +4,7 @@ const MobileMenu = () => {
   return (
     <section>
       <div className="container">
-        <div className="w-full px-5 py-5">
+        <div className="w-full">
           <ProfileMenu />
         </div>
       </div>

@@ -54,3 +54,25 @@ export interface CenterSocialMediaProps {
   socialMedias: CenterSocialMedia[] | undefined;
   isLoading: boolean;
 }
+
+export interface Teammate {
+  id: number;
+  center_id: number;
+  name: string;
+  surname: string;
+  fatherName: string;
+  job: string;
+  text: string;
+  image: string;
+  position: number;
+}
+
+export interface TeammatesResponse {
+  teammates: Teammate[];
+  status: number;
+}
+
+export interface TeammatesSliderProps {
+  teammates: Teammate[] | undefined;
+  isLoading: boolean;
+}

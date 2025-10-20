@@ -1,7 +1,11 @@
 import { useParams } from "react-router-dom";
 
 import { useGetCenter, useGetCenterSocialMedia } from "../hooks/useCenterApi";
-import { useGetCenterBanner } from "../hooks/useBannerApi";
+import {
+  useGetCenterBanner,
+  useGetCenterTariffs,
+  useGetCenterTeammates,
+} from "../hooks/useBannerApi";
 import { useGetCenterPosts } from "../hooks/usePostApi";
 
 // components
@@ -10,6 +14,7 @@ import CenterInfo from "../components/centers/CenterInfo";
 import CenterSocialMedia from "../components/centers/CenterSocialMedia";
 import MembershipSlider from "../components/sliders/MembershipSlider";
 import CenterPosts from "../components/posts/CenterPosts";
+import TeammatesSlider from "../components/sliders/TeammatesSlider";
 
 const CenterPage = () => {
   const { slug } = useParams();
@@ -21,8 +26,13 @@ const CenterPage = () => {
     useGetCenterPosts(slug);
   const { data: centerSocialMedias, isLoading: centerSocialMediaLoading } =
     useGetCenterSocialMedia(slug);
+  const { data: centerTariffs, isLoading: centerTariffLoading } =
+    useGetCenterTariffs(slug);
 
-  console.log(centerPosts);
+  const { data: centerTeammates, isLoading: centerTeammatesLoading } =
+    useGetCenterTeammates(slug);
+
+  console.log(centerTeammates);
 
   return (
     <>
@@ -35,8 +45,14 @@ const CenterPage = () => {
         socialMedias={centerSocialMedias?.data?.socialMedias}
         isLoading={centerSocialMediaLoading}
       />
-      <MembershipSlider />
-
+      <MembershipSlider
+        tariffs={centerTariffs?.data.tariffs}
+        isLoading={centerTariffLoading}
+      />
+      <TeammatesSlider
+        teammates={centerTeammates?.data.teammates}
+        isLoading={centerTeammatesLoading}
+      />
       <CenterPosts
         posts={centerPosts?.data?.data?.data}
         isLoading={postsLoading}

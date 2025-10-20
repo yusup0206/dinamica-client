@@ -1,3 +1,5 @@
+import type { Center } from "./center.interface";
+
 export interface Tariff {
   from_date: string;
   to_date: string;
@@ -18,16 +20,32 @@ export interface Tariff {
     month: number;
     week: null;
   };
-  center: {
-    id: number;
-    name: string;
-    image: string;
-    slug: string;
-    mobile_image: string;
-    type: string;
-  };
+  center: Center;
 }
 
 export interface Tariffs {
   data: Tariff[];
+}
+
+export interface TariffSlider {
+  id: number;
+  center_id: number;
+  name: string;
+  text: string;
+  type: string;
+  activity_type: string;
+  price: string;
+  days_in_month: number;
+  frothable_days: number;
+  image: string;
+}
+
+export interface TariffSliders {
+  tariffs: TariffSlider[];
+  status: number;
+}
+
+export interface MembershipSliderProps {
+  tariffs: TariffSlider[] | undefined;
+  isLoading: boolean;
 }

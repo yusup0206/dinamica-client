@@ -1,17 +1,20 @@
 import type { FC } from "react";
 import type { PostProps } from "../../interfaces/posts.interface";
 import { Link, useParams } from "react-router-dom";
+import { useAppStore } from "../../stores/store";
 
 const CenterPosts: FC<PostProps> = ({ posts, isLoading }) => {
   const { slug } = useParams();
+  const language = useAppStore((state) => state.language);
+
   if (isLoading) return <div>Loading...</div>;
-  console.log(slug);
+
   return (
     <section className="w-full">
       <div className="container">
         <div className="w-full px-5 md:px-10 py-5 grid grid-cols-12 gap-4">
           <h1 className="text-primary text-xl md:text-2xl font-semibold col-span-12">
-            Center Posts
+            {language === "tm" ? "Habarlar" : "News"}
           </h1>
           {posts?.map((post) => (
             <Link
