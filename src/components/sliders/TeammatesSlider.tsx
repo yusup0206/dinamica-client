@@ -48,8 +48,8 @@ const TeammatesSlider = ({ teammates, isLoading }: TeammatesSliderProps) => {
                 <div className="w-full h-full rounded-md overflow-hidden shadow-md px-4 py-8 bg-white flex flex-col items-center justify-start gap-4">
                   <div className="size-28 rounded-full overflow-hidden">
                     <img
-                      src="/assets/images/slide.jpg"
-                      alt=""
+                      src={teammate.image}
+                      alt={teammate.name}
                       loading="lazy"
                       className="size-full object-cover"
                     />
