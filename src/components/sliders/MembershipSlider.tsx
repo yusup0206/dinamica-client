@@ -57,9 +57,10 @@ const MembershipSlider = ({ tariffs, isLoading }: MembershipSliderProps) => {
                       <h3 className="text-white text-lg md:text-xl font-semibold">
                         {tariff.name}
                       </h3>
-                      <p className="text-white text-sm md:text-base">
-                        {tariff.text}
-                      </p>
+                      <div
+                        dangerouslySetInnerHTML={{ __html: tariff.text }}
+                        className="text-white text-sm md:text-base"
+                      ></div>
                     </div>
                     <span className="w-full rounded-md text-primary p-2 bg-white text-sm md:text-base font-semibold text-center">
                       {tariff.price} TMT

@@ -57,9 +57,10 @@ const TeammatesSlider = ({ teammates, isLoading }: TeammatesSliderProps) => {
                   <h3 className="text-primary text-lg md:text-xl font-semibold">
                     {teammate.surname} {teammate.name} {teammate.fatherName}
                   </h3>
-                  <p className="text-textColor text-sm md:text-base italic">
-                    {teammate.text}
-                  </p>
+                  <div
+                    dangerouslySetInnerHTML={{ __html: teammate.text }}
+                    className="text-textColor text-sm md:text-base italic"
+                  ></div>
                   <h5 className="text-customBlack-100 text-sm sm:text-base font-semibold mt-4">
                     {teammate.job}
                   </h5>
